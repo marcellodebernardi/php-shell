@@ -47,7 +47,7 @@ while (1) {
         case "exit":
             return;
         default:
-            echo("Unknown command $fields[0]\n");
+            echo("Unknown command $fields[0]");
     }
 
     echo("\n");
@@ -137,11 +137,14 @@ function copyCmd($fields) {
     else if (!file_exists($fields[1]) || is_dir($fields[1])) {
         echo($fields[1] . ": no such source file.");
     }
-    else if (file_exists($fields[2])) {
-        echo($fields[2] . ": destination file exists, cannot owerwrite.");
+    else if (file_exists($fields[2]) && is_dir($fields[2])) {
+        echo($fields[2] . ": destination must be a file, not a directory.");
     }
-    else {
-        copy($fields[1], $fields[2] . "/" . $fields[1]);
+    else if (file_exists($fields[2])) {
+        echo($fields[2] . ": destination file already exists, cannot overwrite.");
+    }
+    else if (!copy($fields[1], $fields[2] . "/" . $fields[1])) {
+        echo("Could not copy file.");
     }
 }
 
