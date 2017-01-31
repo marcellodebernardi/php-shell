@@ -143,7 +143,7 @@ function copyCmd($fields) {
     else if (file_exists($fields[2])) {
         echo($fields[2] . ": destination file already exists, cannot overwrite.");
     }
-    else if (!copy($fields[1], $fields[2] . "/" . $fields[1])) {
+    else if (!copy($fields[1], $fields[2])) {
         echo("Could not copy file.");
     }
 }
